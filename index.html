@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kabupaten - Portal Berita dan Informasi Daerah</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset dan variabel CSS */
+        :root {
+            --primary: #1b5e20;
+            --secondary: #ff9800;
+            --accent: #1976d2;
+            --light: #f5f5f5;
+            --dark: #2e7d32;
+            --brown: #5d4037;
+            --transition: all 0.3s ease;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 24px rgba(27, 94, 32, 0.15);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 6px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 26px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e68900;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin: 50px 0 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--secondary);
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 1.9rem;
+            color: var(--dark);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary);
+            bottom: -3px;
+            left: 0;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .badge-news {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .badge-pemerintahan {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .badge-pembangunan {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .badge-sosial {
+            background-color: #9c27b0;
+            color: white;
+        }
+        
+        .badge-ekonomi {
+            background-color: #f44336;
+            color: white;
+        }
+        
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .top-bar {
+            background-color: var(--dark);
+            color: white;
+            padding: 10px 0;
+            font-size: 0.9rem;
+        }
+        
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .top-bar i {
+            color: var(--secondary);
+            margin-right: 8px;
+        }
+        
+        .date-time {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .header-main {
+            padding: 20px 0;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .logo-text h1 {
+            font-size: 2.2rem;
+            color: var(--dark);
+            line-height: 1.1;
+        }
+        
+        .logo-text p {
+            font-size: 0.95rem;
+            color: var(--brown);
+            font-style: italic;
+        }
+        
+        .header-cta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+        
+        .header-tagline {
+            background-color: var(--light);
+            padding: 12px 25px;
+            border-radius: 8px;
+            border-left: 5px solid var(--secondary);
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        /* Navigation */
+        .main-nav {
+            background-color: var(--primary);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-links {
+            display: flex;
+        }
+        
+        .nav-links a {
+            color: white;
+            padding: 18px 22px;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-block;
+            position: relative;
+        }
+        
+        .nav-links a:hover, .nav-links .active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            background-color: var(--secondary);
+            bottom: 0;
+            left: 22px;
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover::after, .nav-links .active::after {
+            width: calc(100% - 44px);
+        }
+        
+        .nav-tools {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .search-box {
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            padding: 8px 15px;
+        }
+        
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: white;
+            width: 200px;
+            padding: 5px;
+            outline: none;
+        }
+        
+        .search-box input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .search-box i {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .mobile-toggle {
+            display: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(27, 94, 32, 0.85), rgba(46, 125, 50, 0.9)), url('https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 120px 0;
+            margin-bottom: 40px;
+        }
+        
+        .hero-content {
+            max-width: 700px;
+        }
+        
+        .hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        /* Regional Highlights */
+        .regional-highlights {
+            background-color: white;
+            padding: 30px 0;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+        }
+        
+        .highlights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .highlight-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            padding: 25px 15px;
+            background-color: var(--light);
+            border-radius: 8px;
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .highlight-item:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-5px);
+        }
+        
+        .highlight-item:hover .highlight-icon {
+            background-color: white;
+            color: var(--primary);
+        }
+        
+        .highlight-icon {
+            width: 70px;
+            height: 70px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            transition: var(--transition);
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        /* Featured News */
+        .featured-news {
+            margin-bottom: 40px;
+        }
+        
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+        
+        .featured-item {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .featured-item:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .featured-item.main {
+            grid-column: 1 / -1;
+            display: flex;
+        }
+        
+        .featured-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .featured-item.main .featured-img {
+            width: 50%;
+            height: 350px;
+        }
+        
+        .featured-content {
+            padding: 25px;
+        }
+        
+        .featured-item.main .featured-content {
+            width: 50%;
+        }
+        
+        .featured-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        
+        .featured-content p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #888;
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+        
+        /* Regional Events */
+        .regional-events {
+            margin-bottom: 40px;
+        }
+        
+        .events-list {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .event-item {
+            display: flex;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            transition: var(--transition);
+        }
+        
+        .event-item:last-child {
+            border-bottom: none;
+        }
+        
+        .event-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .event-date {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 70px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 8px;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        
+        .event-day {
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+        
+        .event-month {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+        
+        .event-content h4 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        /* Village Development */
+        .village-development {
+            background-color: var(--light);
+            padding: 40px;
+            margin: 60px 0;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+        
+        .development-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .development-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .development-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .development-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .development-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .development-card p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .sidebar-widget {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+        
+        .widget-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary);
+            color: var(--primary);
+        }
+        
+        .popular-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .popular-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .popular-number {
+            background-color: var(--primary);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        
+        .popular-list li:nth-child(1) .popular-number {
+            background-color: var(--accent);
+        }
+        
+        .popular-list li:nth-child(2) .popular-number {
+            background-color: var(--secondary);
+        }
+        
+        .category-list li {
+            margin-bottom: 12px;
+        }
+        
+        .category-list a {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 15px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+        
+        .category-list a:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .category-count {
+            background-color: #e9ecef;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+        
+        .category-list a:hover .category-count {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Regional Gallery */
+        .regional-gallery {
+            margin: 60px 0;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 15px;
+            transform: translateY(100%);
+            transition: var(--transition);
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        /* Newsletter */
+        .newsletter {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 60px 0;
+            margin: 60px 0;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+        
+        .newsletter-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .newsletter h2 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .newsletter p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 6px 0 0 6px;
+            outline: none;
+            font-size: 1rem;
+        }
+        
+        .newsletter-form button {
+            border-radius: 0 6px 6px 0;
+            border: none;
+            padding: 0 25px;
+            font-weight: 600;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: white;
+        }
+        
+        .footer-logo span {
+            color: var(--secondary);
+        }
+        
+        .footer-about p {
+            color: #bbb;
+            margin-bottom: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #2c387e;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-links h3::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            background-color: var(--secondary);
+            bottom: 0;
+            left: 0;
+        }
+        
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links ul li a {
+            color: #bbb;
+            transition: var(--transition);
+        }
+        
+        .footer-links ul li a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+        
+        .contact-info-footer li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 15px;
+            color: #bbb;
+        }
+        
+        .contact-info-footer i {
+            color: var(--secondary);
+            margin-top: 4px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .featured-item.main {
+                flex-direction: column;
+            }
+            
+            .featured-item.main .featured-img,
+            .featured-item.main .featured-content {
+                width: 100%;
+            }
+            
+            .hero h1 {
+                font-size: 2.7rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-cta {
+                display: none;
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary);
+                flex-direction: column;
+                box-shadow: var(--shadow);
+                z-index: 100;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .search-box {
+                display: none;
+            }
+            
+            .hero {
+                padding: 80px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .newsletter-form input,
+            .newsletter-form button {
+                border-radius: 6px;
+                width: 100%;
+            }
+            
+            .highlights-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.6rem;
+            }
+            
+            .featured-content h3 {
+                font-size: 1.3rem;
+            }
+            
+            .event-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .event-date {
+                margin-right: 0;
+                margin-bottom: 15px;
+                align-self: center;
+            }
+            
+            .logo {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .logo-text h1 {
+                font-size: 1.8rem;
+            }
+            
+            .top-bar .container {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            
+            .date-time {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .highlights-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="top-bar">
+            <div class="container">
+                <span><i class="fas fa-map-marker-alt"></i> Portal Berita dan Informasi Daerah</span>
+                <div class="date-time">
+                    <span id="current-date"></span>
+                    <span id="current-time"></span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="header-main">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-landmark"></i>
+                        </div>
+                        <div class="logo-text">
+                            <h1>Kabupaten</h1>
+                            <p>Suara Daerah, Informasi Masyarakat</p>
+                        </div>
+                    </div>
+                    <div class="header-cta">
+                        <div class="header-tagline">
+                            <i class="fas fa-quote-left"></i> Mengabarkan Informasi dari Desa ke Desa
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-nav">
+            <div class="container nav-container">
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="#" class="active">Beranda</a></li>
+                    <li><a href="#berita">Berita Daerah</a></li>
+                    <li><a href="#pemerintahan">Pemerintahan</a></li>
+                    <li><a href="#pembangunan">Pembangunan</a></li>
+                    <li><a href="#sosial">Sosial Budaya</a></li>
+                    <li><a href="#ekonomi">Ekonomi Desa</a></li>
+                    <li><a href="#galeri">Galeri</a></li>
+                </ul>
+                
+                <div class="nav-tools">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Cari berita daerah...">
+                    </div>
+                    <div class="mobile-toggle" id="mobile-toggle">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Portal Informasi Daerah dan Kabupaten</h1>
+                <p>Dapatkan berita terkini seputar perkembangan daerah, pembangunan desa, kegiatan masyarakat, dan informasi pemerintahan kabupaten.</p>
+                <div class="hero-buttons">
+                    <a href="#berita" class="btn">Baca Berita Daerah</a>
+                    <a href="#pembangunan" class="btn btn-secondary">Info Pembangunan</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Regional Highlights -->
+    <section class="regional-highlights">
+        <div class="container">
+            <div class="highlights-grid">
+                <a href="#pemerintahan" class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <h3>Pemerintahan</h3>
+                    <p>Kebijakan dan program pemerintahan daerah</p>
+                </a>
+                
+                <a href="#pembangunan" class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-hard-hat"></i>
+                    </div>
+                    <h3>Pembangunan</h3>
+                    <p>Proyek pembangunan infrastruktur daerah</p>
+                </a>
+                
+                <a href="#sosial" class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Sosial Budaya</h3>
+                    <p>Kegiatan masyarakat dan budaya daerah</p>
+                </a>
+                
+                <a href="#ekonomi" class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h3>Ekonomi Desa</h3>
+                    <p>UMKM dan potensi ekonomi daerah</p>
+                </a>
+                
+                <a href="#pendidikan" class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Pendidikan</h3>
+                    <p>Perkembangan pendidikan di daerah</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Featured News -->
+                <div class="section-title" id="berita">
+                    <h2>Berita Utama Daerah</h2>
+                </div>
+                
+                <div class="featured-news">
+                    <div class="featured-grid">
+                        <!-- Main Featured -->
+                        <div class="featured-item main">
+                            <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pembangunan Jalan Desa" class="featured-img">
+                            <div class="featured-content">
+                                <span class="badge badge-news">UTAMA</span>
+                                <span class="badge badge-pembangunan">PEMBANGUNAN</span>
+                                <h3>Pembangunan Jalan Desa Tersambung 100% di Kabupaten Ini</h3>
+                                <p>Pemerintah kabupaten berhasil menyelesaikan pembangunan jalan desa yang menghubungkan seluruh desa di wilayahnya. Proyek ini melibatkan partisipasi masyarakat dan anggaran dari APBD.</p>
+                                <div class="news-meta">
+                                    <span><i class="far fa-clock"></i> 4 jam yang lalu</span>
+                                    <span><i class="far fa-eye"></i> 3.8k dilihat</span>
+                                    <span><i class="far fa-comment"></i> 124 komentar</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Featured 1 -->
+                        <div class="featured-item">
+                            <img src="https://images.unsplash.com/photo-1586773860418-dc22f8b874bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Festival Budaya" class="featured-img">
+                            <div class="featured-content">
+                                <span class="badge badge-sosial">SOSIAL BUDAYA</span>
+                                <h3>Festival Budaya Daerah Digelar, Tampilkan Kekayaan Kesenian Lokal</h3>
+                                <p>Kabupaten menggelar festival budaya tahunan yang menampilkan berbagai kesenian dan tradisi lokal. Event ini diikuti oleh 25 desa dengan total 500 peserta.</p>
+                                <div class="news-meta">
+                                    <span><i class="far fa-clock"></i> 1 hari yang lalu</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Featured 2 -->
+                        <div class="featured-item">
+                            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pelatihan UMKM" class="featured-img">
+                            <div class="featured-content">
+                                <span class="badge badge-ekonomi">EKONOMI</span>
+                                <h3>100 Pelaku UMKM Dapat Pelatihan Digital Marketing dari Pemkab</h3>
+                                <p>Pemerintah kabupaten memberikan pelatihan pemasaran digital untuk membantu pelaku UMKM memasarkan produk secara online dan meningkatkan penjualan.</p>
+                                <div class="news-meta">
+                                    <span><i class="far fa-clock"></i> 2 hari yang lalu</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Village Development -->
+                <div class="village-development" id="pembangunan">
+                    <div class="section-title">
+                        <h2>Pembangunan Desa</h2>
+                    </div>
+                    <div class="development-grid">
+                        <!-- Development 1 -->
+                        <div class="development-card">
+                            <div class="development-icon">
+                                <i class="fas fa-road"></i>
+                            </div>
+                            <h3>Infrastruktur Jalan</h3>
+                            <p>Peningkatan akses jalan desa untuk memperlancar mobilitas masyarakat dan distribusi hasil pertanian ke pasar.</p>
+                            <a href="#" class="btn btn-outline">Lihat Progress</a>
+                        </div>
+                        
+                        <!-- Development 2 -->
+                        <div class="development-card">
+                            <div class="development-icon">
+                                <i class="fas fa-tint"></i>
+                            </div>
+                            <h3>Air Bersih</h3>
+                            <p>Program penyediaan air bersih untuk rumah tangga di desa-desa yang sebelumnya kesulitan mendapatkan akses air bersih.</p>
+                            <a href="#" class="btn btn-outline">Lihat Progress</a>
+                        </div>
+                        
+                        <!-- Development 3 -->
+                        <div class="development-card">
+                            <div class="development-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <h3>Listrik Desa</h3>
+                            <p>Pembangunan jaringan listrik untuk desa-desa terpencil yang belum teraliri listrik, meningkatkan kualitas hidup masyarakat.</p>
+                            <a href="#" class="btn btn-outline">Lihat Progress</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Regional Events -->
+                <div class="section-title" id="event">
+                    <h2>Agenda Daerah</h2>
+                </div>
+                
+                <div class="regional-events">
+                    <div class="events-list">
+                        <div class="event-item">
+                            <div class="event-date">
+                                <div class="event-day">28</div>
+                                <div class="event-month">Mei</div>
+                            </div>
+                            <div class="event-content">
+                                <h4>Rapat Koordinasi Camat Se-Kabupaten</h4>
+                                <div class="news-meta">
+                                    <span><i class="fas fa-map
